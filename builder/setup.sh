@@ -15,7 +15,9 @@ apt-get install -y --no-install-recommends \
     wget \
     openssh-server \
     libgl1-mesa-glx \
-    libglib2.0-0
+    libglib2.0-0 \
+    gcc\
+    g++
 
 # Install Python 3.10
 add-apt-repository ppa:deadsnakes/ppa -y

@@ -19,6 +19,7 @@ RUN /bin/bash /setup.sh && \
 # Install Python dependencies (Worker Template)
 COPY builder/requirements.txt /requirements.txt
 RUN python3 -m pip install --upgrade pip && \
+    python3 -m pip install torch torchvision --index-url https://download.pytorch.org/whl/cu118 && \
     python3 -m pip install --upgrade -r /requirements.txt --no-cache-dir && \
     rm /requirements.txt
 
