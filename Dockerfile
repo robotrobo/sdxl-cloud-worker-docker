@@ -31,4 +31,4 @@ RUN python3 /cache_models.py && \
 # Add src files (Worker Template)
 ADD src .
 
-CMD python3 -u -m uvicorn src.main:app --host 0.0.0.0 --port 8000
+CMD python3 -u -m uvicorn main:app --host 0.0.0.0 --port 8000
