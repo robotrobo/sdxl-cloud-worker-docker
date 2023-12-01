@@ -5,7 +5,7 @@ Contains the handler function that will be called by the serverless.
 import os
 import base64
 import concurrent.futures
-
+from runpod.serverless.utils.rp_validator import validate
 import torch
 from diffusers import StableDiffusionXLPipeline, StableDiffusionXLImg2ImgPipeline
 from diffusers.utils import load_image
@@ -18,13 +18,10 @@ from diffusers import (
     DPMSolverMultistepScheduler,
 )
 
-import runpod
-from runpod.serverless.utils import rp_upload, rp_cleanup
-from runpod.serverless.utils.rp_validator import validate
-
 from rp_schemas import INPUT_SCHEMA
 
 torch.cuda.empty_cache()
+
 
 # ------------------------------- Model Handler ------------------------------ #
 class ModelHandler:
@@ -40,7 +37,6 @@ class ModelHandler:
         ).to("cuda", silence_dtype_warnings=True)
         base_pipe.enable_xformers_memory_efficient_attention()
         return base_pipe
-
 
     def load_refiner(self):
         refiner_pipe = StableDiffusionXLImg2ImgPipeline.from_pretrained(
@@ -58,7 +54,9 @@ class ModelHandler:
             self.base = future_base.result()
             self.refiner = future_refiner.result()
 
+
 MODELS = ModelHandler()
+
 
 # ---------------------------------- Helper ---------------------------------- #
 def _save_and_upload_images(images, job_id):
@@ -69,14 +67,15 @@ def _save_and_upload_images(images, job_id):
         image.save(image_path)
 
         if os.environ.get('BUCKET_ENDPOINT_URL', False):
-            image_url = rp_upload.upload_image(job_id, image_path)
-            image_urls.append(image_url)
+            pass
+            # image_url = rp_upload.upload_image(job_id, image_path)
+            # image_urls.append(image_url)
         else:
             with open(image_path, "rb") as image_file:
                 image_data = base64.b64encode(image_file.read()).decode("utf-8")
                 image_urls.append(f"data:image/png;base64,{image_data}")
 
-    rp_cleanup.clean([f"/{job_id}"])
+    # rp_cleanup.clean([f"/{job_id}"])
     return image_urls
 
 
@@ -159,5 +158,4 @@ def generate_image(job):
 
     return results
 
-
-runpod.serverless.start({"handler": generate_image})
+# runpod.serverless.start({"handler": generate_image})
