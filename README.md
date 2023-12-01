@@ -3,8 +3,9 @@
 <h1>Stable Diffusion XL | Worker</h1>
 
 # [![CI | Test Worker](https://github.com/runpod-workers/worker-sdxl/actions/workflows/CI-test_worker.yml/badge.svg)](https://github.com/runpod-workers/worker-sdxl/actions/workflows/CI-test_worker.yml)
-# &nbsp;
 [![CD | Dev Docker Image](https://github.com/robotrobo/sdxl-cloud-worker-docker/actions/workflows/CD-docker_dev.yml/badge.svg)](https://github.com/robotrobo/sdxl-cloud-worker-docker/actions/workflows/CD-docker_dev.yml)
+&nbsp;
+
 🚀 | RunPod implementation of SDXL for serverless deployment.
 </div>
 
